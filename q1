@@ -1,0 +1,181 @@
+#include<iostream>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node* next;
+    Node* prev;
+    Node(int val){
+        this->data = val;
+        this->next = NULL;
+        this->prev = NULL;
+    }
+};
+class Dll{
+    public:
+    void insertHead(Node* &head , int val)
+    {
+        if(head == NULL)
+        {
+            Node*newNode = new Node(val);
+            head = newNode; 
+        }
+        else
+        {
+            Node* newNode = new Node(val);
+            newNode->next = head;
+            head->prev = newNode;
+            head = newNode;
+        }
+    }
+    void insertTail(Node*&head, int val)
+    {
+        if(head == NULL)
+        {
+            Node*newNode = new Node(val);
+            head = newNode; 
+        }
+        else
+        {
+            Node* temp = head ; 
+            while(temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            Node* newNode = new Node(val);
+            temp->next = newNode;
+            newNode->prev = temp;
+        }
+    }
+    int length(Node* head)
+    {
+        int size = 0;
+        Node* temp = head;
+        while(temp != NULL)
+        {
+            size+=1;
+            temp = temp->next;
+        }
+        return size;
+    }
+
+    void insertPos(Node*& head , int pos  , int val)
+    {
+        if(pos == 0)
+        {
+            insertHead(head , val);
+        }
+        else if(pos == length(head))
+        {
+            insertTail(head , val);
+        }
+        else
+        {
+            Node* temp = head;
+            for(int i = 0 ; i < pos-1 ; i++ )
+            {
+                temp = temp->next;
+            }
+            Node* newNode = new Node(val);
+            newNode->next = temp->next;
+            newNode->prev = temp;
+            temp->next->prev= newNode;
+            temp->next = newNode;
+        }
+    }
+
+    void deleteHead(Node* &head)
+    {
+        if(head == NULL)
+        {
+            return ;
+        }
+        if(head->next == NULL)
+        {
+            delete head;
+            head = NULL;
+        }
+        else
+        {
+            Node* temp = head; 
+            head = head -> next;
+            head->prev = NULL;
+            delete temp;
+        }
+    }
+
+    void deleteTail(Node*&head)
+    {
+        if(head->next == NULL && head->prev == NULL)
+        {
+            delete head;
+            head = NULL;
+        }
+        else
+        {
+            Node* temp = head;
+            while(temp->next->next != NULL)
+            {
+                temp = temp->next;
+            }
+            Node* store = temp->next;
+            temp->next = NULL ;
+            delete store;
+        }
+    }
+
+    void DeletePos(int pos , Node* & head){
+        if(pos > length(head))
+        {
+            return ;
+        }
+        if(pos == 0)
+        {
+            deleteHead(head);
+        }
+        else if(pos == (length(head) - 1)){
+            deleteTail(head);
+        }
+        else
+        {
+            Node* temp = head;
+            for(int i = 0 ; i < pos-1; i++)
+            {
+                temp = temp->next ; 
+            }
+            Node* temp2 = temp->next ; 
+            temp->next = temp2->next ;
+            temp2->next->prev = temp;
+            delete temp2;
+        }
+    }
+    bool FindNode(Node* head  , int val)
+    {
+        Node* temp = head ; 
+        while(temp)
+        {
+            if(temp->data == val)
+            {
+                return true;
+            }
+            temp = temp->next;
+        }
+        return false;
+    }
+    void Print(Node* head)
+    {
+        if(head == NULL){
+            cout<<"empty "<<endl;
+        }
+        else{
+        Node* temp =  head;
+        while(temp != NULL)
+        {
+            cout<<temp->data<<" ";
+            temp = temp->next; 
+        }}
+    }
+};
+int main(){
+    return 0;
+}
