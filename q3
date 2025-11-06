@@ -1,0 +1,34 @@
+/*
+DLL
+*/
+find_size(Node*&head)
+{
+    int count =0 ;
+    Node*temp = head;
+    while(temp != NULL)
+    {
+        count+=1;
+        temp = temp->next;
+    }
+    return count;
+}
+
+
+/*
+cll
+*/
+find_size(Node* &head)
+{
+    if(head == NULL)
+    {
+        return 0;
+    }
+    int count = 1;
+    Node*temp = head->next;
+    while(temp != NULL)
+    {
+        count+=1;
+        temp = temp->next;
+    }
+    return count;
+}
